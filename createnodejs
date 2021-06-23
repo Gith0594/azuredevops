@@ -1,0 +1,28 @@
+npm init
+If you are lazy value your time, run npm init --yes to create a project instantly with default settings.
+npm install express --save
+
+create index.js
+//Load express module with `require` directive
+var express = require('express')
+var app = express()
+
+//Define request response in root URL (/)
+app.get('/', function (req, res) {
+  res.send('Hello World!')
+})
+
+//Launch listening server on port 8081
+app.listen(8081, function () {
+  console.log('app listening on port 8081!')
+})
+
+run the app
+
+node index.js
+
+
+Go to http://localhost:8081/ in your browser to view it
+
+
+

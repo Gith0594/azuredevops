@@ -1,0 +1,55 @@
+
+Line 1: We shall use the official Node.js image with Node v12 as the template for our image
+FROM node:12
+
+Line 2: Set the working directory in the container to /app. We shall use this directory to store files, run npm, and launch our application:
+WORKDIR /app
+
+Lines 3-5: Copy the application to the /app directory and install dependencies.
+ If you add the package.json first and run npm install later, Docker won't have
+  to install the dependencies again if you change the package.json file. 
+  This results from the way the Docker image is being built (layers and cache), and this is what we should do:
+COPY package.json /app
+RUN npm install
+COPY . /app
+
+Line 6: This line describes what should be executed when the Docker image is launching.
+ What we want to do is to run our application:
+CMD node index.js
+
+Line 7: Expose port 8081 to the outside once the container has launched:
+EXPOSE 8081
+
+Summing up, the whole Dockerfile should look like this:
+
+FROM node:12
+WORKDIR /app
+COPY package.json /app
+RUN npm install
+COPY . /app
+CMD node index.js
+EXPOSE 8081
+
+build docker image
+docker build -t hello-world .
+
+run docker container
+docker run -p 8081:8081 hello-world
+
+share docker image
+docker build -t [USERNAME]/hello-world .
+
+docker login
+
+push to dockerhub
+docker push [USERNAME]/hello-world
+
+
+Congratulations! You can now use the image on any server or PC with Docker installed:
+
+docker run [USERNAME]/hello-world
+Please mind the image needs to be downloaded on the first run which may take some time depending on your connection
+
+
+
+
